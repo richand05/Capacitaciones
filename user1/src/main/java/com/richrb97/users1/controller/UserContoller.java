@@ -1,14 +1,10 @@
 package com.richrb97.users1.controller;
 
+import com.richrb97.users1.document.RolCount;
 import com.richrb97.users1.document.User;
 import com.richrb97.users1.service.UserService;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +22,7 @@ import java.util.Map;
 public class UserContoller {
     @Autowired
     private UserService userService;
+
 
     @PostMapping("/create")
     public ResponseEntity<Mono<User>> addUser(@RequestBody User user){
@@ -112,6 +106,13 @@ public class UserContoller {
                 .then(Mono.just(ResponseEntity.ok().body(report)));
     }
 
+    @GetMapping("/age-range")
+    public Flux<User> getUsersByAgeRange(@RequestParam int minAge, @RequestParam int maxAge) {
+        return userService.getUsersByAgeRange(minAge, maxAge);
+    }
 
-
+    @GetMapping("/users/age-range-and-role")
+    public Flux<RolCount> getUserCountByAgeRangeAndRole(@RequestParam int minAge, @RequestParam int maxAge) {
+        return userService.getUserCountByAgeRangeAndRole(minAge, maxAge);
+    }
 }

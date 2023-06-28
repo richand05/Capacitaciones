@@ -1,21 +1,18 @@
 package com.richrb97.users1.service;
 
+import com.richrb97.users1.document.RolCount;
 import com.richrb97.users1.document.User;
 import com.richrb97.users1.repository.UserRepository;
 import com.richrb97.users1.utils.ExportToExcel;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +21,10 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
 
     public Flux<User>  getUsers(){
         return userRepository.findAll();
@@ -79,5 +80,14 @@ public class UserService {
             throw new RuntimeException("Error while generating Excel", e);
         }
     }
+
+    public Flux<User> getUsersByAgeRange(int minAge, int maxAge) {
+        return userRepository.findUsersByAgeRange(minAge, maxAge);
+    }
+
+    public Flux<RolCount> getUserCountByAgeRangeAndRole(int minAge, int maxAge) {
+        return userRepository.aggregateUserCountByAgeRangeAndRole(minAge, maxAge);
+    }
+
 
 }
