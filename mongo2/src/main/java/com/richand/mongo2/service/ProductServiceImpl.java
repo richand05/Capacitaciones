@@ -1,6 +1,7 @@
 package com.richand.mongo2.service;
 
 import com.richand.mongo2.document.AveragePriceResult;
+import com.richand.mongo2.document.CategoryAveragePriceResult;
 import com.richand.mongo2.document.CategoryCountResult;
 import com.richand.mongo2.document.Product;
 import com.richand.mongo2.repository.ProductRepository;
@@ -36,8 +37,9 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.getCategoryCountsGreaterThan(price, limit);
     }
 
+
     @Override
-    public Flux<CategoryCountResult> getCategoryCountsOrderedByCategory() {
-        return productRepository.getCategoryCountsOrderedByCategory();
+    public Flux<CategoryAveragePriceResult> getCategoryAveragePrice(double priceThreshold) {
+        return productRepository.getCategoryAveragePrice(priceThreshold);
     }
 }

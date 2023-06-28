@@ -1,6 +1,7 @@
 package com.richand.mongo2.controller;
 
 import com.richand.mongo2.document.AveragePriceResult;
+import com.richand.mongo2.document.CategoryAveragePriceResult;
 import com.richand.mongo2.document.CategoryCountResult;
 import com.richand.mongo2.document.Product;
 import com.richand.mongo2.repository.ProductRepository;
@@ -39,8 +40,10 @@ public class ProductController {
         return productService.getCategoryCountsGreaterThan(price, limit);
     }
 
-    @GetMapping("/products/category-counts")
-    public Flux<CategoryCountResult> getCategoryCountsOrderedByCategory() {
-        return productService.getCategoryCountsOrderedByCategory();
+
+
+    @GetMapping("/products/category-average-price")
+    public Flux<CategoryAveragePriceResult> getCategoryAveragePrice(@RequestParam double priceThreshold) {
+        return productService.getCategoryAveragePrice(priceThreshold);
     }
 }
