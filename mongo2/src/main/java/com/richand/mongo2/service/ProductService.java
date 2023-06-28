@@ -15,7 +15,6 @@ public interface ProductService {
 
     Flux<CategoryCountResult> getCategoryCountsGreaterThan(double price, int limit);
 
-    Flux<CategoryCountResult> getCategoryCountsOrderedByCategory();
     Flux<CategoryAveragePriceResult> getCategoryAveragePrice(double priceThreshold);
 
 }
