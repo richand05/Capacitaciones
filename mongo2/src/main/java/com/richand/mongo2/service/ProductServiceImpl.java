@@ -38,6 +38,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
 
+
     @Override
     public Flux<CategoryAveragePriceResult> getCategoryAveragePrice(double priceThreshold) {
         return productRepository.getCategoryAveragePrice(priceThreshold);

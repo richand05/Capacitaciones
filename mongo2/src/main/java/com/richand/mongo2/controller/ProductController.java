@@ -40,7 +40,10 @@ public class ProductController {
         return productService.getCategoryCountsGreaterThan(price, limit);
     }
 
-
+    @GetMapping("/products/category-counts")
+    public Flux<CategoryCountResult> getCategoryCountsOrderedByCategory() {
+        return productService.getCategoryCountsOrderedByCategory();
+    }
 
     @GetMapping("/products/category-average-price")
     public Flux<CategoryAveragePriceResult> getCategoryAveragePrice(@RequestParam double priceThreshold) {
